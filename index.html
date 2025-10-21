@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiTalk - Konsultasi Diabetes Gratis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 5%;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Consultation Form */
+        .consultation-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .consultation-section h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Tips Section */
+        .tips-section {
+            margin: 3rem 0;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .tip-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #666;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .founder-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .founder-info h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            text-align: center;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .consultation-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">DiTalk</div>
+            <ul>
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#features">Fitur</a></li>
+                <li><a href="#consultation">Konsultasi</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>🩺 DiTalk</h1>
+        <p>Platform Konsultasi Diabetes Melitus Gratis</p>
+        <p>Dapatkan informasi dan bantuan seputar diabetes dari ahli kami</p>
+        <button class="cta-button" onclick="scrollToConsultation()">Mulai Konsultasi Gratis</button>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">Pengguna Aktif</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Konsultasi Selesai</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Layanan Online</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Gratis</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container" id="features">
+        <h2 style="text-align: center; color: white; font-size: 2.5rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">✨ Fitur Unggulan Kami</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Konsultasi Online</h3>
+                <p>Konsultasi langsung dengan ahli diabetes melalui chat atau video call kapan saja</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Monitor Gula Darah</h3>
+                <p>Catat dan pantau kadar gula darah Anda secara berkala dengan grafik yang mudah dipahami</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🍎</div>
+                <h3>Panduan Nutrisi</h3>
+                <p>Dapatkan rekomendasi menu makanan sehat khusus penderita diabetes</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💊</div>
+                <h3>Reminder Obat</h3>
+                <p>Pengingat otomatis untuk minum obat dan cek gula darah tepat waktu</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Artikel Edukatif</h3>
+                <p>Akses berbagai artikel dan informasi terbaru seputar diabetes melitus</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Komunitas</h3>
+                <p>Bergabung dengan komunitas penderita diabetes untuk saling berbagi pengalaman</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consultation Form -->
+    <div class="container" id="consultation">
+        <div class="consultation-section">
+            <h2>📝 Form Konsultasi Gratis</h2>
+            <form id="consultationForm">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap *</label>
+                    <input type="text" id="name" required placeholder="Masukkan nama lengkap Anda">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required placeholder="contoh@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Nomor Telepon *</label>
+                    <input type="tel" id="phone" required placeholder="08xxxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label for="age">Usia *</label>
+                    <input type="number" id="age" required placeholder="Masukkan usia Anda">
+                </div>
+                <div class="form-group">
+                    <label for="diabetesType">Tipe Diabetes *</label>
+                    <select id="diabetesType" required>
+                        <option value="">Pilih tipe diabetes</option>
+                        <option value="type1">Diabetes Tipe 1</option>
+                        <option value="type2">Diabetes Tipe 2</option>
+                        <option value="gestational">Diabetes Gestasional</option>
+                        <option value="unknown">Belum Tahu/Konsultasi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bloodSugar">Kadar Gula Darah Terakhir (mg/dL)</label>
+                    <input type="number" id="bloodSugar" placeholder="Contoh: 120">
+                </div>
+                <div class="form-group">
+                    <label for="question">Pertanyaan/Keluhan Anda *</label>
+                    <textarea id="question" required placeholder="Jelaskan keluhan atau pertanyaan Anda..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Kirim Konsultasi</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="container" id="tips">
+        <h2 style="text-align: center; color: white; font-size: 2.5rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">💡 Tips Mengelola Diabetes</h2>
+        <div class="tips-section">
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>🥗 Pola Makan Sehat</h4>
+                    <p>Konsumsi makanan rendah gula dan karbohidrat kompleks. Perbanyak sayuran, protein tanpa lemak, dan hindari makanan olahan.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🏃‍♂️ Olahraga Teratur</h4>
+                    <p>Lakukan aktivitas fisik minimal 30 menit setiap hari. Jalan kaki, bersepeda, atau berenang sangat baik untuk kontrol gula darah.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>💊 Rutin Minum Obat</h4>
+                    <p>Jangan skip jadwal minum obat. Konsultasikan dengan dokter jika mengalami efek samping atau ingin mengubah dosis.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🩸 Cek Gula Darah</h4>
+                    <p>Monitor gula darah secara teratur sesuai anjuran dokter. Catat hasilnya untuk evaluasi pola gula darah Anda.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>😴 Tidur Cukup</h4>
+                    <p>Pastikan tidur 7-8 jam per hari. Kurang tidur dapat mempengaruhi kadar gula darah dan resistensi insulin.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🧘‍♀️ Kelola Stres</h4>
+                    <p>Stres dapat meningkatkan gula darah. Lakukan meditasi, yoga, atau hobi yang Anda sukai untuk relaksasi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tentang DiTalk</h3>
+                <p>DiTalk adalah platform konsultasi online gratis yang didedikasikan untuk membantu penderita diabetes melitus mendapatkan informasi dan dukungan yang mereka butuhkan.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Kontak</h3>
+                <a href="mailto:info@ditalk.com">📧 info@ditalk.com</a>
+                <a href="tel:+6281234567890">📱 +62 812-3456-7890</a>
+                <p>📍 Jakarta, Indonesia</p>
+            </div>
+            <div class="footer-section">
+                <h3>Tautan Cepat</h3>
+                <a href="#home">Beranda</a>
+                <a href="#features">Fitur</a>
+                <a href="#consultation">Konsultasi</a>
+                <a href="#tips">Tips</a>
+            </div>
+            <div class="footer-section">
+                <div class="founder-info">
+                    <h4>👤 Pencetus DiTalk</h4>
+                    <h3>Indi</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin-top: 0.5rem;">Founder & CEO DiTalk</p>
+                    <p style="color: rgba(255,255,255,0.8); margin-top: 1rem; font-size: 0.9rem;">"Bersama kita lawan diabetes dengan pengetahuan dan dukungan yang tepat"</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd; color: #666;">
+            <p>&copy; 2024 DiTalk - Platform Konsultasi Diabetes Melitus. Created by Indi</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #667eea;">✅ Konsultasi Berhasil Dikirim!</h2>
+            <p style="margin: 1rem 0; color: #666;">Terima kasih telah menggunakan DiTalk. Tim kami akan segera menghubungi Anda melalui email atau telepon dalam 1x24 jam.</p>
+            <button class="close-modal" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Form Submission
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                age: document.getElementById('age').value,
+                diabetesType: document.getElementById('diabetesType').value,
+                bloodSugar: document.getElementById('bloodSugar').value,
+                question: document.getElementById('question').value
+            };
+
+            // Show success modal
+            document.getElementById('successModal').style.display = 'flex';
+
+            // Reset form
+            this.reset();
+
+            // Log data (in real application, send to server)
+            console.log('Consultation Data:', formData);
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        function scrollToConsultation() {
+            document.getElementById('consultation').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('successModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
